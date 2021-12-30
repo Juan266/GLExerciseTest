@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.glexercise.R
 import com.test.glexercise.domain.model.ItemList
 
-class MainListAdapter constructor(val listener: OnMainListClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainListAdapter constructor(private val listener: OnMainListClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var data: List<ItemList>
 

@@ -20,7 +20,6 @@ class MainListViewModel(private val mainListRepository: MainListRepository) : Ba
     val showProgress: LiveData<Boolean> = _showProgress
 
     private val _errorList: MutableLiveData<String> = MutableLiveData()
-    val errorList: LiveData<String> = _errorList
 
     private var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->

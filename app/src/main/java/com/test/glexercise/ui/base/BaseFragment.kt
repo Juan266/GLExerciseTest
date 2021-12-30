@@ -3,12 +3,8 @@ package com.test.glexercise.ui.base
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
 import android.view.*
-import com.test.glexercise.R
 
 
 abstract class BaseFragment : Fragment() {
@@ -22,10 +18,6 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return layoutInflater.inflate(getLayout(), container, false)
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     protected abstract fun getLayout(): Int
@@ -64,7 +56,7 @@ abstract class BaseFragment : Fragment() {
         return getMenuResId() != -1 //DEFAULT_INT_VALUE
     }
 
-    fun showError(textInputLayout: TextInputLayout, value: Int) {
+    /*fun showError(textInputLayout: TextInputLayout, value: Int) {
         textInputLayout.error = requireContext().getString(value)
-    }
+    }*/
 }

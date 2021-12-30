@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import com.test.glexercise.*
 import com.test.glexercise.domain.model.ItemList
 import com.test.glexercise.ui.base.BaseFragment
@@ -48,8 +48,7 @@ class DetailListFragment: BaseFragment() {
 
         binding.detailListTitle.text = getDetailTitle()
         binding.detailListDescription.text = getDetailDescription()
-        Picasso.get().load(getDetailImageUrl()).into(binding.detailListImage)
-
+        Glide.with(this).load(getDetailImageUrl()).into(binding.detailListImage)
         return binding.root
     }
 }

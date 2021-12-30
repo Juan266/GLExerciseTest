@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,7 +42,9 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
             context,
             LinearLayoutManager.VERTICAL
         )
-        dividerItemDecoration.setDrawable(requireContext().getDrawable(R.drawable.divider_list)!!)
+
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider_list)!!)
+        //dividerItemDecoration.setDrawable(requireContext().getDrawable(R.drawable.divider_list)!!)
         binding.mainList.addItemDecoration(dividerItemDecoration)
         binding.mainListSwipeRefresh.setOnRefreshListener(this)
 

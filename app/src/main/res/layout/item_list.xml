@@ -20,11 +20,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			tools:text="TextView"
-			android:maxLines="2"
-			android:ellipsize="end"
-			android:maxEms="100"/>
-
+			tools:text="TextView"/>
 
 		<TextView
 			android:id="@+id/item_list_description"
@@ -49,46 +45,3 @@
 		android:layout_gravity="center_vertical"
 		tools:srcCompat="@tools:sample/avatars"/>
 </LinearLayout>
-
-
-
-	<!--<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:layout_constraintTop_toTopOf="parent">
-
-
-		<TextView
-			android:id="@+id/item_list_title"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/white"
-			android:textSize="16sp"
-			android:text="TextView"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintLeft_toLeftOf="parent"/>
-
-		<TextView
-			android:id="@+id/item_list_description"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
-			android:textColor="@color/white"
-			android:textSize="14sp"
-			android:text="TextView"
-			app:layout_constraintLeft_toLeftOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/item_list_title"/>
-
-		<ImageView
-			android:id="@+id/imageView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:layout_constraintRight_toRightOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:srcCompat="@drawable/ic_launcher_background" />
-
-	</androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-

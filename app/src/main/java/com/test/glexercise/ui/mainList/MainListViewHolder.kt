@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import com.test.glexercise.domain.model.ItemList
 import kotlinx.android.synthetic.main.item_list.view.*
 
@@ -24,7 +24,7 @@ class MainListViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
 
         title.text = itemList.title
         description.text = itemList.description
-        Picasso.get().load(itemList.image!!).into(imageView)
+        Glide.with(context).load(itemList.image!!).thumbnail(0.1f).into(imageView)
         area.setOnClickListener{listener.openDetailItemScreen(itemList)}
     }
 }

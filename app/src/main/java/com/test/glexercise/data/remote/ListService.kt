@@ -8,5 +8,4 @@ import retrofit2.http.GET
 interface ListService {
     @GET("/list")
     suspend fun getList(): Response<Array<ItemList>>
-    //fun getList(): Observable<Array<ItemList>>
 }
