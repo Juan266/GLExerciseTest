@@ -44,7 +44,6 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
         )
 
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider_list)!!)
-        //dividerItemDecoration.setDrawable(requireContext().getDrawable(R.drawable.divider_list)!!)
         binding.mainList.addItemDecoration(dividerItemDecoration)
         binding.mainListSwipeRefresh.setOnRefreshListener(this)
 

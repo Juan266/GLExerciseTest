@@ -37,15 +37,8 @@ val NetworkModule = module {
 
 }
 
-//val DEBUG: Boolean = true
-
 fun getOkHttpClient(): OkHttpClient {
     val builder = OkHttpClient.Builder()
-    //if (BuildConfig.DEBUG) {
-    //if (DEBUG) {
-        //builder.addNetworkInterceptor(StethoInterceptor())
-    //}
-    //builder.addInterceptor(getHeaderInterceptor())
     builder.addInterceptor(getHttpLoggingInterceptor())
     builder.connectTimeout(TIMEOUT_CONNECT.toLong(), TimeUnit.SECONDS)
     builder.readTimeout(TIMEOUT_READ.toLong(), TimeUnit.SECONDS)
@@ -56,27 +49,5 @@ fun getOkHttpClient(): OkHttpClient {
 private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
     httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    //if (DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
     return httpLoggingInterceptor
 }
-
-/*private fun addHeaders(request: Request): Headers.Builder {
-    val builder = request.headers().newBuilder()
-    val token = SharedPreferenceUtils.getTokenLocal()
-    if (!TextUtils.isEmpty(token) && !request.url().toString().contains("token")) {
-        builder.add("Authorization", String.format("Bearer %s", token!!))
-    }
-    return builder
-        .add("Content-Type", "application/json")
-    //.add("X-Env", if (DEBUG) "dev" else "prd")
-    //if (BuildConfig.DEBUG) "dev" else "prd")
-}*/
-
-/*private fun getHeaderInterceptor(): Interceptor {
-    return Interceptor { chain ->
-        var request = chain.request()
-        request = request.newBuilder().headers(addHeaders(request).build()).build()
-        chain.proceed(request)
-    }
-}*/
-

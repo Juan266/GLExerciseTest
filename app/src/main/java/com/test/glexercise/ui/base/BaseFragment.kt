@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.*
+import com.test.glexercise.DEFAULT_INT_VALUE
 
 
 abstract class BaseFragment : Fragment() {
@@ -49,14 +50,10 @@ abstract class BaseFragment : Fragment() {
     }
 
     open fun getMenuResId(): Int {
-        return -1 //DEFAULT_INT_VALUE
+        return DEFAULT_INT_VALUE
     }
 
     private fun hasMenu(): Boolean {
-        return getMenuResId() != -1 //DEFAULT_INT_VALUE
+        return getMenuResId() != DEFAULT_INT_VALUE
     }
-
-    /*fun showError(textInputLayout: TextInputLayout, value: Int) {
-        textInputLayout.error = requireContext().getString(value)
-    }*/
 }
