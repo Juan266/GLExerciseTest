@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/detail_list_header_const"
+			android:layout_margin="16dp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<TextView
+				android:id="@+id/detail_list_title_const"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toStartOf="@id/detail_list_image_const"
+				android:textSize="19sp"
+				tools:text="All the Lorem Ipsum generators"/>
+
+			<!--tools:text="All the Lorem Ipsum generators generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable"-->
+
+			<ImageView
+				android:id="@+id/detail_list_image_const"
+				android:layout_width="100dp"
+				android:layout_height="100dp"
+				app:layout_constraintStart_toEndOf="@id/detail_list_title_const"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="@id/detail_list_title_const"
+				app:layout_constraintBottom_toBottomOf="@id/detail_list_title_const"
+				tools:srcCompat="@tools:sample/avatars"	/>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<View
+			android:id="@+id/detail_list_div_const"
+			android:layout_width="match_parent"
+			android:layout_height="2dp"
+			android:layout_marginTop="16dp"
+			android:background="@color/medium_gray"
+			app:layout_constraintTop_toBottomOf="@+id/detail_list_header_const"/>
+
+		<TextView
+			android:id="@+id/detail_list_description_const"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			app:layout_constraintStart_toStartOf="@id/detail_list_header_const"
+			app:layout_constraintEnd_toEndOf="@id/detail_list_header_const"
+			tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus varius sem, eu ultricies urna condimentum a. Suspendisse aliquam mi vel orci viverra consectetur. Morbi at diam neque. Nam commodo risus sit amet mi hendrerit, sed facilisis quam tincidunt"
+			android:textSize="15sp"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/detail_list_div_const"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

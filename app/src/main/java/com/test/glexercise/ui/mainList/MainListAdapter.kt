@@ -20,7 +20,7 @@ class MainListAdapter constructor(private val listener: OnMainListClickListener)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MainListViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_list, parent, false
+                R.layout.item_list_const_2, parent, false
             )
         )
     }

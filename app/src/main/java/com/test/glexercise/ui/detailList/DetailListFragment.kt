@@ -13,7 +13,7 @@ import com.test.glexercise.ui.base.BaseFragment
 
 class DetailListFragment: BaseFragment() {
 
-    private lateinit var binding: com.test.glexercise.databinding.FragmentDetailListBinding
+    private lateinit var binding: com.test.glexercise.databinding.FragmentDetailListConstBinding
 
     companion object {
         fun newInstance(itemParcelable: ItemList): DetailListFragment {
@@ -38,7 +38,7 @@ class DetailListFragment: BaseFragment() {
     }
 
     override fun getLayout(): Int {
-        return R.layout.fragment_detail_list
+        return R.layout.fragment_detail_list_const
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +46,9 @@ class DetailListFragment: BaseFragment() {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
 
-        binding.detailListTitle.text = getDetailTitle()
-        binding.detailListDescription.text = getDetailDescription()
-        Glide.with(this).load(getDetailImageUrl()).into(binding.detailListImage)
+        binding.detailListTitleConst.text = getDetailTitle()
+        binding.detailListDescriptionConst.text = getDetailDescription()
+        Glide.with(this).load(getDetailImageUrl()).into(binding.detailListImageConst)
         return binding.root
     }
 }
