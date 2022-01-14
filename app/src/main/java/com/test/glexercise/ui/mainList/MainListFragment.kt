@@ -65,8 +65,8 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
         viewModelList.getMainList()
         viewModelList.listData.observe(viewLifecycleOwner, {
             if (it != null) {
-                listMain = it.asList()
-                setMainList(listMain)
+                //listMain = it.asList()
+                //setMainList(listMain)
             }
         })
         viewModelList.refreshing.observe(viewLifecycleOwner, {

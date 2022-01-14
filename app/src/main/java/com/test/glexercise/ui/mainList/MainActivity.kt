@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), OnMainListClickListener { //BaseActivi
 
     private lateinit var listMain: List<ItemList>
     private val adapterMainList: MainListAdapter = MainListAdapter(this)
-    private lateinit var binding: com.test.glexercise.databinding.FragmentMainListBinding
+    private lateinit var binding: FragmentMainListBinding
 
 
     private val viewModelList by viewModels<MainListViewModel>()
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), OnMainListClickListener { //BaseActivi
         viewModelList.getMainList()
         viewModelList.listData.observe(this) {
             if (it != null) {
-                listMain = it.asList()
+                listMain = it.data!!.toList()
                 setMainList(listMain)
             }
         }
