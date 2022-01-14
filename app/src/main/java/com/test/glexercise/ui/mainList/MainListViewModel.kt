@@ -2,13 +2,16 @@ package com.test.glexercise.ui.mainList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.test.glexercise.domain.model.ItemList
 import com.test.glexercise.domain.repository.MainListRepository
 import com.test.glexercise.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-
-class MainListViewModel(private val mainListRepository: MainListRepository) : BaseViewModel() {
+@HiltViewModel
+class MainListViewModel @Inject constructor(private val mainListRepository: MainListRepository) : ViewModel() {
 
     private val _listData: MutableLiveData<Array<ItemList>> = MutableLiveData()
     val listData: LiveData<Array<ItemList>> = _listData
@@ -46,15 +49,17 @@ class MainListViewModel(private val mainListRepository: MainListRepository) : Ba
     }
 
     private fun onGetMainListSuccess(result: Array<ItemList>) {
-        _listData.value = result
         _refreshing.value = false
         _showProgress.value = false
+        _listData.value = result
+
 
     }
 
     private fun onGetMainListError(error: String) {
         _errorList.value = error
     }
+
 
 
 }

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.test.glexercise.R
-
+import dagger.hilt.android.AndroidEntryPoint
 
 abstract class BaseActivity : AppCompatActivity(), IActivity {
     private var errorSnackbar: Snackbar? = null

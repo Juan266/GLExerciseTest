@@ -1,12 +1,16 @@
 package com.test.glexercise.ui.mainList
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,18 +18,29 @@ import com.test.glexercise.R
 import com.test.glexercise.domain.model.ItemList
 import com.test.glexercise.ui.base.BaseFragment
 import com.test.glexercise.ui.detailList.DetailListActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
-class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLayout.OnRefreshListener {
+//@AndroidEntryPoint
+class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var listMain: List<ItemList>
-    private val viewModelList : MainListViewModel by viewModel()
+    //private val viewModelList : MainListViewModel by viewModel()
+    private val viewModelList by viewModels<MainListViewModel>()
+
+
     private val adapterMainList: MainListAdapter = MainListAdapter(this)
 
     private lateinit var binding: com.test.glexercise.databinding.FragmentMainListBinding
 
-    override fun getLayout(): Int = R.layout.fragment_main_list
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+
+
+    fun getLayout(): Int = R.layout.fragment_main_list
 
     @SuppressLint("WrongConstant")
     override fun onCreateView(
@@ -33,7 +48,7 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
         savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
 
-        binding.mainList.layoutManager = LinearLayoutManager(
+        /*binding.mainList.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
             false
@@ -45,7 +60,7 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
 
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider_list)!!)
         binding.mainList.addItemDecoration(dividerItemDecoration)
-        binding.mainListSwipeRefresh.setOnRefreshListener(this)
+        binding.mainListSwipeRefresh.setOnRefreshListener(this)*/
 
         viewModelList.getMainList()
         viewModelList.listData.observe(viewLifecycleOwner, {
@@ -55,16 +70,16 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
             }
         })
         viewModelList.refreshing.observe(viewLifecycleOwner, {
-            binding.mainListSwipeRefresh.isRefreshing = it!!
+            //binding.mainListSwipeRefresh.isRefreshing = it!!
         })
         viewModelList.showProgress.observe(viewLifecycleOwner, {
-            binding.mainListProgressBar.visibility = if (it) (View.VISIBLE) else (View.GONE)
+            //binding.mainListProgressBar.visibility = if (it) (View.VISIBLE) else (View.GONE)
         })
         return binding.root
     }
 
     private fun setMainList(list: List<ItemList>) {
-        binding.mainList.adapter = adapterMainList
+        //binding.mainList.adapter = adapterMainList
         adapterMainList.updateMainList(list)
 
     }
@@ -73,7 +88,22 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
         goTo(DetailListActivity.getIntent(requireContext(), item), false)
     }
 
+
+
     override fun onRefresh() {
         this.viewModelList.getMainList()
+    }
+
+    fun goTo(intent: Intent, finishActivity: Boolean) {
+        if (activity != null && isAdded) {
+            goToIntent(intent, finishActivity, false)
+        }
+    }
+
+    private fun goToIntent(intent: Intent, finishActivity: Boolean, slideAnimation: Boolean) {
+        startActivity(intent)
+        if (finishActivity) {
+            requireActivity().finish()
+        }
     }
 }
