@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.*
 import com.test.glexercise.DEFAULT_INT_VALUE
+import dagger.hilt.android.AndroidEntryPoint
 
 
 abstract class BaseFragment : Fragment() {

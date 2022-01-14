@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.test.glexercise.R
-
+import com.test.glexercise.ui.mainList.MainListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 abstract class BaseActivity : AppCompatActivity(), IActivity {
     private var errorSnackbar: Snackbar? = null
@@ -82,6 +83,9 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         }
     }
 
+    override fun getMainListViewModel() : MainListViewModel {
+        return null!!
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val onOptionsItemSelected = super.onOptionsItemSelected(item)

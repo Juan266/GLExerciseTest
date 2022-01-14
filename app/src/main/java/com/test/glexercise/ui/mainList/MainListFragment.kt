@@ -1,31 +1,43 @@
 package com.test.glexercise.ui.mainList
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.test.glexercise.DEFAULT_INT_VALUE
 import com.test.glexercise.R
 import com.test.glexercise.domain.model.ItemList
-import com.test.glexercise.ui.base.BaseFragment
+import com.test.glexercise.ui.base.IActivity
 import com.test.glexercise.ui.detailList.DetailListActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
-class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLayout.OnRefreshListener {
+@AndroidEntryPoint
+class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+    lateinit var callback: IActivity
 
     private lateinit var listMain: List<ItemList>
-    private val viewModelList : MainListViewModel by viewModel()
+    //private val viewModelList by viewModels<MainListViewModel>()
+
     private val adapterMainList: MainListAdapter = MainListAdapter(this)
 
     private lateinit var binding: com.test.glexercise.databinding.FragmentMainListBinding
 
-    override fun getLayout(): Int = R.layout.fragment_main_list
+    fun getLayout(): Int = R.layout.fragment_main_list
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     @SuppressLint("WrongConstant")
     override fun onCreateView(
@@ -47,20 +59,25 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
         binding.mainList.addItemDecoration(dividerItemDecoration)
         binding.mainListSwipeRefresh.setOnRefreshListener(this)
 
-        viewModelList.getMainList()
-        viewModelList.listData.observe(viewLifecycleOwner, {
+        callback.getMainListViewModel().getMainList()
+        callback.getMainListViewModel().listData.observe(viewLifecycleOwner, {
             if (it != null) {
-                listMain = it.asList()
-                setMainList(listMain)
+                listMain = it.data!!.toList()
+                this.setMainList(listMain)
             }
         })
-        viewModelList.refreshing.observe(viewLifecycleOwner, {
+        callback.getMainListViewModel().refreshing.observe(viewLifecycleOwner, {
             binding.mainListSwipeRefresh.isRefreshing = it!!
         })
-        viewModelList.showProgress.observe(viewLifecycleOwner, {
+        callback.getMainListViewModel().showProgress.observe(viewLifecycleOwner, {
             binding.mainListProgressBar.visibility = if (it) (View.VISIBLE) else (View.GONE)
         })
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as IActivity
     }
 
     private fun setMainList(list: List<ItemList>) {
@@ -74,6 +91,35 @@ class MainListFragment : BaseFragment(), OnMainListClickListener, SwipeRefreshLa
     }
 
     override fun onRefresh() {
-        this.viewModelList.getMainList()
+        callback.getMainListViewModel().getMainList()
+    }
+
+    fun goTo(intent: Intent, finishActivity: Boolean) {
+        if (activity != null && isAdded) {
+            goToIntent(intent, finishActivity, false)
+        }
+    }
+
+    private fun goToIntent(intent: Intent, finishActivity: Boolean, slideAnimation: Boolean) {
+        startActivity(intent)
+        if (finishActivity) {
+            requireActivity().finish()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        if (hasMenu()) {
+            inflater.inflate(getMenuResId(), menu)
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    open fun getMenuResId(): Int {
+        return DEFAULT_INT_VALUE
+    }
+
+    private fun hasMenu(): Boolean {
+        return getMenuResId() != DEFAULT_INT_VALUE
     }
 }

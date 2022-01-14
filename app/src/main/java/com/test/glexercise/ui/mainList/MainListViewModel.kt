@@ -2,16 +2,22 @@ package com.test.glexercise.ui.mainList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.test.glexercise.domain.model.ItemList
+import com.test.glexercise.domain.model.NetworkResult
 import com.test.glexercise.domain.repository.MainListRepository
 import com.test.glexercise.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
+@HiltViewModel
+class MainListViewModel @Inject constructor(private val mainListRepository: MainListRepository) : ViewModel() {
 
-class MainListViewModel(private val mainListRepository: MainListRepository) : BaseViewModel() {
-
-    private val _listData: MutableLiveData<Array<ItemList>> = MutableLiveData()
-    val listData: LiveData<Array<ItemList>> = _listData
+    private val _listData: MutableLiveData<NetworkResult<Array<ItemList>>> = MutableLiveData()
+    val listData: LiveData<NetworkResult<Array<ItemList>>> = _listData
 
     private val _refreshing: MutableLiveData<Boolean> = MutableLiveData()
     val refreshing: LiveData<Boolean> = _refreshing
@@ -32,7 +38,7 @@ class MainListViewModel(private val mainListRepository: MainListRepository) : Ba
     }
 
 
-    fun getMainList() {
+    /*fun getMainList() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = mainListRepository.getList()
             withContext(Dispatchers.Main) {
@@ -43,18 +49,30 @@ class MainListViewModel(private val mainListRepository: MainListRepository) : Ba
                 }
             }
         }
+    }*/
+
+    fun getMainList() = viewModelScope.launch {
+        mainListRepository.getList().collect { values ->
+            onGetMainListSuccess(values)
+        }
     }
 
-    private fun onGetMainListSuccess(result: Array<ItemList>) {
-        _listData.value = result
+    private fun onGetMainListSuccess(result: NetworkResult<Array<ItemList>>) {
         _refreshing.value = false
         _showProgress.value = false
-
+        _listData.value = result
     }
+
+    /*private fun onGetMainListSuccess(result: Array<ItemList>) {
+        _refreshing.value = false
+        _showProgress.value = false
+        _listData.value = result
+    }*/
 
     private fun onGetMainListError(error: String) {
         _errorList.value = error
     }
+
 
 
 }

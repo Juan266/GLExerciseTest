@@ -1,5 +1,8 @@
 package com.test.glexercise.ui.mainList
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +32,7 @@ class MainListAdapter constructor(private val listener: OnMainListClickListener)
         return if (::data.isInitialized) data.size else 0
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateMainList(items: List<ItemList>) {
         val result = items.toMutableList()
         this.data = result
