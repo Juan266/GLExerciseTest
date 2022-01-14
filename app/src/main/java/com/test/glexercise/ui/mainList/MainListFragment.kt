@@ -26,7 +26,7 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
     lateinit var callback: IActivity
 
     private lateinit var listMain: List<ItemList>
-    private val viewModelList by viewModels<MainListViewModel>()
+    //private val viewModelList by viewModels<MainListViewModel>()
 
     private val adapterMainList: MainListAdapter = MainListAdapter(this)
 
@@ -59,17 +59,17 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
         binding.mainList.addItemDecoration(dividerItemDecoration)
         binding.mainListSwipeRefresh.setOnRefreshListener(this)
 
-        viewModelList.getMainList()
-        viewModelList.listData.observe(viewLifecycleOwner, {
+        callback.getMainListViewModel().getMainList()
+        callback.getMainListViewModel().listData.observe(viewLifecycleOwner, {
             if (it != null) {
                 listMain = it.data!!.toList()
                 this.setMainList(listMain)
             }
         })
-        viewModelList.refreshing.observe(viewLifecycleOwner, {
+        callback.getMainListViewModel().refreshing.observe(viewLifecycleOwner, {
             binding.mainListSwipeRefresh.isRefreshing = it!!
         })
-        viewModelList.showProgress.observe(viewLifecycleOwner, {
+        callback.getMainListViewModel().showProgress.observe(viewLifecycleOwner, {
             binding.mainListProgressBar.visibility = if (it) (View.VISIBLE) else (View.GONE)
         })
         return binding.root
@@ -91,7 +91,7 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
     }
 
     override fun onRefresh() {
-        this.viewModelList.getMainList()
+        callback.getMainListViewModel().getMainList()
     }
 
     fun goTo(intent: Intent, finishActivity: Boolean) {
