@@ -20,11 +20,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_full_screen.*
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), OnMainListClickListener { //BaseActivity() {
+class MainActivity : AppCompatActivity(), IActivity { //BaseActivity() {
 
-    private lateinit var listMain: List<ItemList>
-    private val adapterMainList: MainListAdapter = MainListAdapter(this)
-    private lateinit var binding: FragmentMainListBinding
+    //private lateinit var listMain: List<ItemList>
+    //private val adapterMainList: MainListAdapter = MainListAdapter(this)
+    //private lateinit var binding: FragmentMainListBinding
 
 
     private val viewModelList by viewModels<MainListViewModel>()
@@ -32,19 +32,19 @@ class MainActivity : AppCompatActivity(), OnMainListClickListener { //BaseActivi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /*if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             initView(savedInstanceState)
-        }*/
+        }
         addBackToActionBar()
-        binding = FragmentMainListBinding.inflate(layoutInflater)
+        /*binding = FragmentMainListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //binding.tvTest.text = "This is a hardcode text"
 
-        setMainListView()
+        setMainListView()*/
 
     }
 
-    private fun setMainListView() {
+    /*private fun setMainListView() {
         binding.mainList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,
             false )
         val dividerItemDecoration = DividerItemDecoration(this,LinearLayoutManager.VERTICAL)
@@ -65,30 +65,31 @@ class MainActivity : AppCompatActivity(), OnMainListClickListener { //BaseActivi
         viewModelList.showProgress.observe(this) {
             binding.mainListProgressBar.visibility = if (it) (View.VISIBLE) else (View.GONE)
         }
-    }
+    }*/
 
-    private fun setMainList(list: List<ItemList>) {
+    /*private fun setMainList(list: List<ItemList>) {
         binding.mainList.adapter = adapterMainList
         adapterMainList.updateMainList(list)
         Toast.makeText(this, list.get(0).title, Toast.LENGTH_SHORT).show()
-    }
-    /*protected fun openFragment(fragment: Fragment, addToBackStack: Boolean) {
+    }*/
+
+    protected fun openFragment(fragment: Fragment, addToBackStack: Boolean) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(getContainerResId(), fragment)
         if (addToBackStack) {
             transaction.addToBackStack(null)
         }
         transaction.commitAllowingStateLoss()
-    }*/
+    }
 
-    /*protected open fun initView(savedInstanceState: Bundle?) {
+    protected open fun initView(savedInstanceState: Bundle?) {
         val fragment = getFragment()
         if (fragment != null) {
             openFragment(fragment, false)
         }
-    }*/
+    }
 
-    protected open fun getLayout() = R.layout.fragment_main_list
+    //protected open fun getLayout() = R.layout.fragment_main_list
 
     protected open fun getContainerResId() = R.id.container
 
@@ -98,14 +99,29 @@ class MainActivity : AppCompatActivity(), OnMainListClickListener { //BaseActivi
         }
     }
 
-    override fun openDetailItemScreen(item: ItemList) {
+    /*override fun openDetailItemScreen(item: ItemList) {
 
-    }
-
-
-    /*fun getFragment(): Fragment? {
-        return MainListFragment()
     }*/
 
 
+    fun getFragment(): Fragment? {
+        return MainListFragment()
+    }
+
+    //IActivity
+    override fun showError(errorMessage: String) {
+
+    }
+
+    override fun showError(errorMessageResId: Int) {
+
+    }
+
+    override fun showSuccess(messageResId: Int) {
+
+    }
+
+    override fun hideKeyboard() {
+
+    }
 }

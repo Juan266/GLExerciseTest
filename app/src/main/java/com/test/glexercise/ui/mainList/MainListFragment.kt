@@ -1,12 +1,10 @@
 package com.test.glexercise.ui.mainList
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.activity.viewModels
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,33 +12,32 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.test.glexercise.DEFAULT_INT_VALUE
 import com.test.glexercise.R
 import com.test.glexercise.domain.model.ItemList
-import com.test.glexercise.ui.base.BaseFragment
+import com.test.glexercise.ui.base.IActivity
 import com.test.glexercise.ui.detailList.DetailListActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private lateinit var listMain: List<ItemList>
-    //private val viewModelList : MainListViewModel by viewModel()
-    private val viewModelList by viewModels<MainListViewModel>()
+    lateinit var callback: IActivity
 
+    private lateinit var listMain: List<ItemList>
+    private val viewModelList by viewModels<MainListViewModel>()
 
     private val adapterMainList: MainListAdapter = MainListAdapter(this)
 
     private lateinit var binding: com.test.glexercise.databinding.FragmentMainListBinding
 
+    fun getLayout(): Int = R.layout.fragment_main_list
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
-
-
-
-    fun getLayout(): Int = R.layout.fragment_main_list
 
     @SuppressLint("WrongConstant")
     override fun onCreateView(
@@ -48,7 +45,7 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
         savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
 
-        /*binding.mainList.layoutManager = LinearLayoutManager(
+        binding.mainList.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
             false
@@ -60,26 +57,31 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
 
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider_list)!!)
         binding.mainList.addItemDecoration(dividerItemDecoration)
-        binding.mainListSwipeRefresh.setOnRefreshListener(this)*/
+        binding.mainListSwipeRefresh.setOnRefreshListener(this)
 
         viewModelList.getMainList()
         viewModelList.listData.observe(viewLifecycleOwner, {
             if (it != null) {
-                //listMain = it.asList()
-                //setMainList(listMain)
+                listMain = it.data!!.toList()
+                this.setMainList(listMain)
             }
         })
         viewModelList.refreshing.observe(viewLifecycleOwner, {
-            //binding.mainListSwipeRefresh.isRefreshing = it!!
+            binding.mainListSwipeRefresh.isRefreshing = it!!
         })
         viewModelList.showProgress.observe(viewLifecycleOwner, {
-            //binding.mainListProgressBar.visibility = if (it) (View.VISIBLE) else (View.GONE)
+            binding.mainListProgressBar.visibility = if (it) (View.VISIBLE) else (View.GONE)
         })
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as IActivity
+    }
+
     private fun setMainList(list: List<ItemList>) {
-        //binding.mainList.adapter = adapterMainList
+        binding.mainList.adapter = adapterMainList
         adapterMainList.updateMainList(list)
 
     }
@@ -87,8 +89,6 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
     override fun openDetailItemScreen(item: ItemList) {
         goTo(DetailListActivity.getIntent(requireContext(), item), false)
     }
-
-
 
     override fun onRefresh() {
         this.viewModelList.getMainList()
@@ -105,5 +105,21 @@ class MainListFragment : Fragment(), OnMainListClickListener, SwipeRefreshLayout
         if (finishActivity) {
             requireActivity().finish()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        if (hasMenu()) {
+            inflater.inflate(getMenuResId(), menu)
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    open fun getMenuResId(): Int {
+        return DEFAULT_INT_VALUE
+    }
+
+    private fun hasMenu(): Boolean {
+        return getMenuResId() != DEFAULT_INT_VALUE
     }
 }
