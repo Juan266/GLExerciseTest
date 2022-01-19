@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/persistent_bottom_sheet"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:behavior_hideable="false"
+	app:behavior_peekHeight="0dp"
+	app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+	android:background="@color/white">
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/bottom_sheet_title"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:text="Title Bottom Sheet"
+		android:textSize="24sp"
+		android:textColor="@color/black"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/bottom_sheet_item_one"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:text="Item 1"
+		android:textSize="16sp"
+		android:textColor="@color/black"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_title" />
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/bottom_sheet_item_two"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:text="Item 2"
+		android:textSize="16sp"
+		android:textColor="@color/black"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_item_one" />
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/bottom_sheet_item_three"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:text="Item 3"
+		android:textSize="16sp"
+		android:textColor="@color/black"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_item_two" />
+</androidx.constraintlayout.widget.ConstraintLayout>

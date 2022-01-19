@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.test.glexercise.*
 import com.test.glexercise.domain.model.ItemList
 import com.test.glexercise.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.persistent_bottom_sheet.*
 
 class DetailListFragment: BaseFragment() {
 
@@ -49,6 +52,43 @@ class DetailListFragment: BaseFragment() {
         binding.detailListTitleConst.text = getDetailTitle()
         binding.detailListDescriptionConst.text = getDetailDescription()
         Glide.with(this).load(getDetailImageUrl()).into(binding.detailListImageConst)
+
+
+        binding.detailListImageConst.setOnClickListener {
+            /*if (callback.getBottomSheetBehavior().state == BottomSheetBehavior.STATE_EXPANDED)
+                callback.getBottomSheetBehavior().state = BottomSheetBehavior.STATE_COLLAPSED
+            else
+                callback.getBottomSheetBehavior().state = BottomSheetBehavior.STATE_EXPANDED*/
+
+            ModalBottomSheetFragment.newInstance().show(childFragmentManager,
+                ModalBottomSheetFragment::class.java.canonicalName)
+        }
+
+        //Listening to State Changes of BottomSheet
+        callback.getBottomSheetBehavior().addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                /*when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> Toast.makeText(getActivity(), "STATE_COLLAPSED", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_EXPANDED -> Toast.makeText(getActivity(), "STATE_EXPANDED", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_DRAGGING -> Toast.makeText(getActivity(), "STATE_DRAGGING", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_SETTLING -> Toast.makeText(getActivity(), "STATE_SETTLING", Toast.LENGTH_SHORT).show()
+                    BottomSheetBehavior.STATE_HIDDEN -> Toast.makeText(getActivity(), "STATE_HIDDEN", Toast.LENGTH_SHORT).show()
+                    else -> Toast.makeText(getActivity(), "OTHER_STATE", Toast.LENGTH_SHORT).show()
+                }*/
+            }
+        })
+
+        requireActivity().bottom_sheet_item_one.setOnClickListener {
+            callback.getBottomSheetBehavior().state = BottomSheetBehavior.STATE_COLLAPSED
+            Toast.makeText(requireContext(), "TEST CLICK ITEM 1 BOTTOM SHEET", Toast.LENGTH_SHORT).show()
+        }
+
+
+
         return binding.root
     }
 }

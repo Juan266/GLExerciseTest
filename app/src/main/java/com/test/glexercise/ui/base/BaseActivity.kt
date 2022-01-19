@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.test.glexercise.R
 import com.test.glexercise.ui.mainList.MainListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +23,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
 
         if (savedInstanceState == null) {
             initView(savedInstanceState)
+            bottomSheetView()
         }
         addBackToActionBar()
     }
@@ -36,6 +39,9 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
         if (fragment != null) {
             openFragment(fragment, false)
         }
+    }
+    protected open fun bottomSheetView() {
+
     }
 
     protected fun openFragment(fragment: Fragment, addToBackStack: Boolean) {
@@ -84,6 +90,10 @@ abstract class BaseActivity : AppCompatActivity(), IActivity {
     }
 
     override fun getMainListViewModel() : MainListViewModel {
+        return null!!
+    }
+
+    override fun getBottomSheetBehavior(): BottomSheetBehavior<ConstraintLayout> {
         return null!!
     }
 

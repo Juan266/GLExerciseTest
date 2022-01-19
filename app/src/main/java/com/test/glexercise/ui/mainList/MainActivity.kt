@@ -3,7 +3,9 @@ package com.test.glexercise.ui.mainList
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.test.glexercise.R
 import com.test.glexercise.ui.base.IActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,5 +74,9 @@ class MainActivity : AppCompatActivity(), IActivity { //BaseActivity() {
 
     override fun hideKeyboard() {
 
+    }
+
+    override fun getBottomSheetBehavior(): BottomSheetBehavior<ConstraintLayout> {
+        return null!!
     }
 }
