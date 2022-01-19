@@ -17,18 +17,9 @@ import javax.inject.Inject
 class MainListRepositoryImpl @Inject constructor(private val listService: ListService) : BaseApiResponse(),
             MainListRepository {
 
-    //override suspend fun getList() : Response<Array<ItemList>> {
     override suspend fun getList() : Flow<NetworkResult<Array<ItemList>>> {
         return flow<NetworkResult<Array<ItemList>>> {
             emit(safeApiCall { listService.getList() })
         }.flowOn(Dispatchers.IO)
     }
-
-
-    /*override suspend fun getDog(): Flow<NetworkResult<DogResponse>> {
-        return flow<NetworkResult<DogResponse>> {
-            emit(safeApiCall { remoteDataSource.getDog() })
-        }.flowOn(Dispatchers.IO)
-    }*/
-
 }
